@@ -11,11 +11,9 @@ def index():
 
 @app.route('/api')
 def analyse():
-    print(request)
-    sentence = request.args.get('setence')
-    print(sentence)
-    result = json.dumps(sentiment_pipeline(sentence))  # Use json.dumps() to convert to JSON string
+    sentence = request.args.get('sentence')
+    result = sentiment_pipeline(sentence)  # Use json.dumps() to convert to JSON string
     print(result)
-    return result, 200, {'Content-Type': 'application/json'}  # Set content type to JSON
+    return result # Set content type to JSON
 
 app.run()

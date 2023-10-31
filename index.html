@@ -23,35 +23,30 @@
         const scoreValue = document.getElementById('scoreValue');
 
         analyzeButton.addEventListener('click', () => {
-            const text = inputText.value;
-            if (text) {
-                // Send a GET request with the text as a query parameter
-                fetch(`/api?sentence=${encodeURIComponent(text)}`)
-                .then(response => {
-                    response.json()
-                    console.log(response)
-                })
-                .then(data => {
-                    console.log(data)
-                    data = data[0]
-                    if (data.label && data.score) {
-                        labelValue.textContent = data.label;
-                        scoreValue.textContent = data.score;
-                    } else {
-                        labelValue.textContent = 'Data not available';
-                        scoreValue.textContent = 'Data not available';
-                    }
-                })
-                .catch(error => {
-                    labelValue.textContent = 'An error occurred during analysis.';
-                    scoreValue.textContent = 'An error occurred during analysis.';
-                    console.error(error);
-                });
-            } else {
-                labelValue.textContent = 'Please enter a paragraph to analyze.';
-                scoreValue.textContent = 'Please enter a paragraph to analyze.';
-            }
-        });
+    const text = inputText.value;
+    if (text) {
+        // Send a GET request with the text as a query parameter
+        fetch(`/api?sentence=${encodeURIComponent(text)}`)
+            .then(response => response.json())  // Convert response to JSON
+            .then(data => {
+                if (data[0] && data[0].label && data[0].score) {  // Check if data is available
+                    labelValue.textContent = data[0].label;
+                    scoreValue.textContent = data[0].score;
+                } else {
+                    labelValue.textContent = 'Data not available';
+                    scoreValue.textContent = 'Data not available';
+                }
+            })
+            .catch(error => {
+                labelValue.textContent = 'An error occurred during analysis.';
+                scoreValue.textContent = 'An error occurred during analysis.';
+                console.error(error);
+            });
+    } else {
+        labelValue.textContent = 'Please enter a paragraph to analyze.';
+        scoreValue.textContent = 'Please enter a paragraph to analyze.';
+    }
+});
     </script>
 </body>
 </html>
