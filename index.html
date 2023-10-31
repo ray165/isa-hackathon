@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text Analyzer</title>
+</head>
+<body>
+    <h1>Text Analyzer</h1>
+    <p>Enter a paragraph to analyze:</p>
+    <textarea id="inputText" rows="5" cols="50"></textarea><br>
+    <button id="analyzeButton">Analyze</button><br><br>
+    <p>Sentiment Analysis Result:</p>
+    <div id="result"></div>
+
+    <script>
+        const analyzeButton = document.getElementById('analyzeButton');
+        const inputText = document.getElementById('inputText');
+        const resultDiv = document.getElementById('result');
+
+        analyzeButton.addEventListener('click', () => {
+            const text = inputText.value;
+            if (text) {
+                fetch('/api', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ text: text })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    resultDiv.innerHTML = `Analysis Result: ${data.result}`;
+                })
+                .catch(error => {
+                    resultDiv.innerHTML = 'An error occurred during analysis.';
+                    console.error(error);
+                });
+            } else {
+                resultDiv.innerHTML = 'Please enter a paragraph to analyze.';
+            }
+        });
+    </script>
+</body>
+</html>
