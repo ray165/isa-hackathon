@@ -12,7 +12,6 @@ def index():
 def analyse():
     sentence = request.args.get('sentence')
     result = sentiment_pipeline(sentence)
-    sentiment_pipeline(data)
-    return(sentence)
+    return(result)
 
 app.run()
