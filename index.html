@@ -26,10 +26,14 @@
             const text = inputText.value;
             if (text) {
                 // Send a GET request with the text as a query parameter
-                fetch(`/api?setence=${encodeURIComponent(text)}`)
-                .then(response => response.json())
+                fetch(`/api?sentence=${encodeURIComponent(text)}`)
+                .then(response => {
+                    response.json()
+                    console.log(response)
+                })
                 .then(data => {
                     console.log(data)
+                    data = data[0]
                     if (data.label && data.score) {
                         labelValue.textContent = data.label;
                         scoreValue.textContent = data.score;
